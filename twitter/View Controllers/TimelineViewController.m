@@ -8,6 +8,8 @@
 
 #import "TimelineViewController.h"
 #import "APIManager.h"
+#import "LoginViewController.h"
+#import "AppDelegate.h"
 
 @interface TimelineViewController ()
 
@@ -17,7 +19,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     // Get timeline
     [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
         if (tweets) {
@@ -46,6 +47,18 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (IBAction)didTapLogout:(id)sender {
+    [UIApplication sharedApplication].delegate;
+    // TimelineViewController.m
+    AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+    appDelegate.window.rootViewController = loginViewController;
+    [[APIManager shared] logout];
+}
+
 
 
 @end

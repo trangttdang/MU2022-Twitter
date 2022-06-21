@@ -86,15 +86,12 @@
     NSData *urlData = [NSData dataWithContentsOfURL:url];
     
     cell.profileImageView.image = [UIImage imageWithData:urlData];
-//    [cell.profileImageView setImage:[UIImage imageWithData:urlData]];
-    
     cell.textLabel.text = tweet.text;
     cell.userNameLabel.text = tweet.user.name;
     cell.dateCreatedLabel.text = tweet.createdAtString;
     cell.userScreenNameLabel.text = tweet.user.screenName;
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
-    
     
     return cell;
 }

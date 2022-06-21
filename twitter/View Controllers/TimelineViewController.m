@@ -10,26 +10,38 @@
 #import "APIManager.h"
 #import "LoginViewController.h"
 #import "AppDelegate.h"
+#import "Tweet.h"
+#import "TweetCell.h"
 
-@interface TimelineViewController ()
-
+@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *homeTimelineTableView;
+@property (strong, nonatomic) NSMutableArray *arrayOfTweets;
 @end
 
 @implementation TimelineViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    
+    self.homeTimelineTableView.dataSource = self;
+    self.homeTimelineTableView.delegate = self;
+    
     // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSArray *tweets, NSError *error) {
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
         if (tweets) {
             NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (NSDictionary *dictionary in tweets) {
-                NSString *text = dictionary[@"text"];
-                NSLog(@"%@", text);
+            for (Tweet *tweet in tweets) {
+                NSString *text = tweet.text;
             }
+            self.arrayOfTweets = tweets;
+//            NSLog(@"%@",tweets);
+//            NSLog(@"%@",self.arrayOfTweets);
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
+
+        [self.homeTimelineTableView reloadData];
     }];
 }
 
@@ -49,8 +61,6 @@
 */
 
 - (IBAction)didTapLogout:(id)sender {
-    [UIApplication sharedApplication].delegate;
-    // TimelineViewController.m
     AppDelegate *appDelegate = (AppDelegate *)[UIApplication sharedApplication].delegate;
 
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -59,6 +69,34 @@
     [[APIManager shared] logout];
 }
 
+//returne rows are in each section of the table
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return self.arrayOfTweets.count;
+}
 
+
+//Returne a preconfigured cell that will be used to render the row in the table specified by the indexPath
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+    Tweet *tweet = self.arrayOfTweets[indexPath.row];
+    
+    NSString *URLString = tweet.user.profilePicture;
+    NSURL *url = [NSURL URLWithString:URLString];
+    NSData *urlData = [NSData dataWithContentsOfURL:url];
+    
+    cell.profileImageView.image = [UIImage imageWithData:urlData];
+//    [cell.profileImageView setImage:[UIImage imageWithData:urlData]];
+    
+    cell.textLabel.text = tweet.text;
+    cell.userNameLabel.text = tweet.user.name;
+    cell.dateCreatedLabel.text = tweet.createdAtString;
+    cell.userScreenNameLabel.text = tweet.user.screenName;
+    cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
+    cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    
+    
+    return cell;
+}
 
 @end

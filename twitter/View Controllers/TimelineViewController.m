@@ -23,6 +23,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
+    [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:(UIControlEventValueChanged)];
+    [self.homeTimelineTableView insertSubview:refreshControl atIndex:0];
     
     self.homeTimelineTableView.dataSource = self;
     self.homeTimelineTableView.delegate = self;
@@ -94,6 +97,29 @@
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
     
     return cell;
+}
+
+- (void)beginRefresh:(UIRefreshControl *)refreshControl {
+
+    // Get timeline
+    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
+        if (tweets) {
+            NSLog(@"😎😎😎 Successfully loaded home timeline");
+            for (Tweet *tweet in tweets) {
+                NSString *text = tweet.text;
+            }
+            self.arrayOfTweets = tweets;
+//            NSLog(@"%@",tweets);
+//            NSLog(@"%@",self.arrayOfTweets);
+        } else {
+            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+        }
+
+        [self.homeTimelineTableView reloadData];
+        [refreshControl endRefreshing];
+
+        }];
+
 }
 
 @end

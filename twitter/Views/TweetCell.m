@@ -34,11 +34,12 @@
              [self.delegate didTapFavorite:tweet];
          }
      }];
-    
-    self.tweet.favorited = YES;
-    self.tweet.favoriteCount += 1;
-    [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-    
+    if(self.tweet.favorited == NO){
+        self.tweet.favorited = YES;
+        self.tweet.favoriteCount += 1;
+        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
+        
+    }
     [self refreshData];
     
 }

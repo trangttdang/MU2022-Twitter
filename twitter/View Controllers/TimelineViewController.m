@@ -86,6 +86,8 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     
+    cell.tweet = tweet;
+    
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
     NSData *urlData = [NSData dataWithContentsOfURL:url];
@@ -97,7 +99,11 @@
     cell.userScreenNameLabel.text = tweet.user.screenName;
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
-    
+    if(tweet.favorited){
+        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
+    } else{
+        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
+    }
     return cell;
 }
 
@@ -124,9 +130,6 @@
 
 }
 
-//- (void)didTweet:(nonnull Tweet *)tweet {
-//    <#code#>
-//}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
    UINavigationController *navigationController = [segue destinationViewController];

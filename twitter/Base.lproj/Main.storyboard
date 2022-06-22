@@ -115,14 +115,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="retweet-icon" translatesAutoresizingMaskIntoConstraints="NO" id="obc-AD-vhO">
-                                                    <rect key="frame" x="92" y="165" width="24" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="favor-icon" translatesAutoresizingMaskIntoConstraints="NO" id="xMX-YS-kRI">
-                                                    <rect key="frame" x="209" y="165" width="24" height="24"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rUA-J7-Pom">
                                                     <rect key="frame" x="125" y="168" width="36" height="17"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -137,6 +129,21 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2M-oC-FrE">
+                                                    <rect key="frame" x="176" y="158" width="54" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="favor-icon"/>
+                                                    <connections>
+                                                        <action selector="didTapFavorite:" destination="3fd-8z-kY9" eventType="touchUpInside" id="K5l-O7-nLT"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NIB-ow-rai">
+                                                    <rect key="frame" x="67" y="157" width="54" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" image="retweet-icon"/>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="UOj-hL-tcu" firstAttribute="top" secondItem="IWs-Qj-JHu" secondAttribute="topMargin" constant="8" id="0Pn-H3-QXx"/>
@@ -161,11 +168,10 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="dateCreatedLabel" destination="gqR-dg-FVc" id="Jj9-At-ykK"/>
+                                            <outlet property="favoriteButton" destination="g2M-oC-FrE" id="AUR-Mu-aVz"/>
                                             <outlet property="favoriteCountLabel" destination="RVc-El-RoW" id="ypO-wM-gWC"/>
-                                            <outlet property="favoriteImageView" destination="xMX-YS-kRI" id="SQv-mN-4cl"/>
                                             <outlet property="profileImageView" destination="Zng-Hw-OkC" id="T2q-1Z-qdn"/>
                                             <outlet property="retweetCountLabel" destination="rUA-J7-Pom" id="dmp-vY-QwQ"/>
-                                            <outlet property="retweetImageView" destination="obc-AD-vhO" id="4D5-Y6-0OD"/>
                                             <outlet property="textLabel" destination="JoT-TQ-y8E" id="5k3-vb-Q8f"/>
                                             <outlet property="userNameLabel" destination="UOj-hL-tcu" id="evU-GZ-zpb"/>
                                             <outlet property="userScreenNameLabel" destination="xml-gh-0jz" id="lbg-HF-Kov"/>
@@ -200,7 +206,7 @@
                                 <rect key="frame" x="276" y="7.5" width="83" height="41"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="edit-icon"/>
+                                <buttonConfiguration key="configuration" style="plain" image="edit-icon" title=""/>
                                 <connections>
                                     <segue destination="NhN-ax-X8a" kind="presentation" id="xhW-C4-o1u"/>
                                 </connections>
@@ -234,12 +240,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="DHn-tJ-4h1">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="aEy-WR-oVm">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="61N-FB-BMa">
+                        <barButtonItem key="leftBarButtonItem" id="aEy-WR-oVm">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="61N-FB-BMa">
                                 <rect key="frame" x="16" y="9" width="83" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="close-icon"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="close-icon"/>
                                 <connections>
                                     <action selector="didClose:" destination="z7V-8E-hpy" eventType="touchUpInside" id="PBe-17-qBM"/>
                                 </connections>

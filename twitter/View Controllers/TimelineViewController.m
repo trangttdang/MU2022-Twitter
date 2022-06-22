@@ -12,10 +12,12 @@
 #import "AppDelegate.h"
 #import "Tweet.h"
 #import "TweetCell.h"
+#import "ComposeViewController.h"
 
-@interface TimelineViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *homeTimelineTableView;
 @property (strong, nonatomic) NSMutableArray *arrayOfTweets;
+
 @end
 
 @implementation TimelineViewController
@@ -120,6 +122,21 @@
 
         }];
 
+}
+
+//- (void)didTweet:(nonnull Tweet *)tweet {
+//    <#code#>
+//}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+   UINavigationController *navigationController = [segue destinationViewController];
+   ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+   composeController.delegate = self;
+}
+
+- (void)didTweet:(nonnull Tweet *)tweet {
+    [self.arrayOfTweets addObject:tweet];
+    [self.homeTimelineTableView reloadData];
 }
 
 @end

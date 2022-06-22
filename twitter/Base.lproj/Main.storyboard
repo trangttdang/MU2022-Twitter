@@ -143,6 +143,9 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                     <state key="normal" image="retweet-icon"/>
+                                                    <connections>
+                                                        <action selector="didTapRetweet:" destination="3fd-8z-kY9" eventType="touchUpInside" id="UAX-0I-dS0"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -171,6 +174,7 @@
                                             <outlet property="favoriteButton" destination="g2M-oC-FrE" id="AUR-Mu-aVz"/>
                                             <outlet property="favoriteCountLabel" destination="RVc-El-RoW" id="ypO-wM-gWC"/>
                                             <outlet property="profileImageView" destination="Zng-Hw-OkC" id="T2q-1Z-qdn"/>
+                                            <outlet property="retweetButton" destination="NIB-ow-rai" id="mOK-vB-Uw6"/>
                                             <outlet property="retweetCountLabel" destination="rUA-J7-Pom" id="dmp-vY-QwQ"/>
                                             <outlet property="textLabel" destination="JoT-TQ-y8E" id="5k3-vb-Q8f"/>
                                             <outlet property="userNameLabel" destination="UOj-hL-tcu" id="evU-GZ-zpb"/>

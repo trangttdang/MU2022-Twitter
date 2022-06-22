@@ -38,10 +38,10 @@
             NSLog(@"😎😎😎 Successfully loaded home timeline");
             for (Tweet *tweet in tweets) {
                 NSString *text = tweet.text;
+                NSLog(@"%@",text);
             }
             self.arrayOfTweets = tweets;
-//            NSLog(@"%@",tweets);
-//            NSLog(@"%@",self.arrayOfTweets);
+            NSLog(@"%@",self.arrayOfTweets);
         } else {
             NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
         }
@@ -99,10 +99,16 @@
     cell.userScreenNameLabel.text = tweet.user.screenName;
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
-    if(tweet.favorited){
+    if(tweet.favorited == YES){
         [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-    } else{
+    } else if (tweet.favorited == NO){
         [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
+    }
+    if(tweet.retweeted == YES){
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
+    }
+    if(tweet.retweeted == NO){
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
     }
     return cell;
 }
@@ -138,7 +144,7 @@
 }
 
 - (void)didTweet:(nonnull Tweet *)tweet {
-    [self.arrayOfTweets addObject:tweet];
+    [self.arrayOfTweets insertObject:tweet atIndex:0];
     [self.homeTimelineTableView reloadData];
 }
 

@@ -10,6 +10,7 @@
 #import "Tweet.h"
 #import "User.h"
 #import "APIManager.h"
+#import "DateTools.h"
 
 @implementation TweetCell
 
@@ -25,6 +26,9 @@
 }
 - (IBAction)didTapRetweet:(id)sender {
     if(self.tweet.retweeted == NO){
+        self.tweet.retweeted = YES;
+        self.tweet.retweetCount += 1;
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
         [[APIManager shared] retweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
@@ -32,15 +36,15 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet retweet count %d", tweet.retweetCount);
-
-                    self.tweet.retweeted = YES;
-                    self.tweet.retweetCount += 1;
-                    [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
+                
+//                [self.delegate didTapRetweet:tweet];
                 [self refreshData];
             }
         }];
     } else if(self.tweet.retweeted == YES){
-
+        self.tweet.retweeted = NO;
+        self.tweet.retweetCount -= 1;
+        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
         [[APIManager shared] unRetweet:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
                  NSLog(@"Error retweeting tweet: %@", error.localizedDescription);
@@ -48,9 +52,7 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet retweet count %d", tweet.retweetCount);
-                self.tweet.retweeted = NO;
-                self.tweet.retweetCount -= 1;
-                [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
+//                [self.delegate didTapRetweet:tweet];
                 [self refreshData];
             }
         }];
@@ -60,7 +62,11 @@
 }
 - (IBAction)didTapFavorite:(id)sender {
     if(self.tweet.favorited == NO){
-
+        //Update the local tweet model
+        self.tweet.favorited = YES;
+        self.tweet.favoriteCount += 1;
+        //Update cell UI
+        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
         // Send a POST request to the POST favorites/create endpoint
         [[APIManager shared] favorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
@@ -70,17 +76,15 @@
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet favorite count %d", tweet.favoriteCount);
 //                [self.delegate didTapFavorite:tweet];
-                //Update the local tweet model
-                self.tweet.favorited = YES;
-                self.tweet.favoriteCount += 1;
-                //Update cell UI
-                [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
                 [self refreshData];
-                
             }
         }];
     } else if(self.tweet.favorited == YES){
-
+        //Update the local tweet model
+        self.tweet.favorited = NO;
+        self.tweet.favoriteCount -= 1;
+        //Update cell UI
+        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
         // Send a POST request to the POST favorites/create endpoint
         [[APIManager shared] unFavorite:self.tweet completion:^(Tweet *tweet, NSError *error) {
             if(error){
@@ -90,11 +94,6 @@
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet favorite count %d", tweet.favoriteCount);
 //                [self.delegate didTapFavorite:tweet];
-                //Update the local tweet model
-                self.tweet.favorited = NO;
-                self.tweet.favoriteCount -= 1;
-                //Update cell UI
-                [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
                 [self refreshData];
             }
         }];

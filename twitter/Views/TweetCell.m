@@ -99,9 +99,6 @@
             }
         }];
     }
-
-    
-    
 }
 
 - (void)refreshData{

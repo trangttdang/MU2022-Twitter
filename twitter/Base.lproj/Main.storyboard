@@ -326,11 +326,17 @@
                                                         <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" image="retweet-icon"/>
+                                                        <connections>
+                                                            <action selector="didTapRetweet:" destination="wdb-OX-cYL" eventType="touchUpInside" id="KgV-ZO-dLa"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yEs-f1-Bf6">
                                                         <rect key="frame" x="94" y="0.0" width="30" height="30"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" image="favor-icon"/>
+                                                        <connections>
+                                                            <action selector="didTapFavorite:" destination="wdb-OX-cYL" eventType="touchUpInside" id="5Hb-31-Kv7"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5wF-u4-3i9">
                                                         <rect key="frame" x="188" y="0.0" width="30" height="30"/>
@@ -407,8 +413,10 @@
                     <navigationItem key="navigationItem" id="Zej-gF-n0p"/>
                     <connections>
                         <outlet property="datePostedLabel" destination="Zmh-si-1v3" id="bRv-hI-DaG"/>
-                        <outlet property="favoriteCountLabel" destination="0dT-gL-kuf" id="VMX-2u-mpU"/>
+                        <outlet property="favoriteButton" destination="yEs-f1-Bf6" id="c4F-n9-YNd"/>
+                        <outlet property="favoriteCountLabel" destination="0dT-gL-kuf" id="5Xv-mD-vBg"/>
                         <outlet property="profileImageView" destination="VHF-n0-cqJ" id="2ML-6J-alB"/>
+                        <outlet property="retweetButton" destination="BFp-Uy-B6O" id="Zyh-43-4co"/>
                         <outlet property="retweetCountLabel" destination="0k7-31-drG" id="m1L-f5-3hH"/>
                         <outlet property="textLabel" destination="spb-Be-bGa" id="NoF-AE-9Hj"/>
                         <outlet property="userNameLabel" destination="Tbg-ih-aio" id="rfQ-O3-bSg"/>
@@ -427,15 +435,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-tw-hJf">
-                                <rect key="frame" x="39" y="76" width="299" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="top" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fg1-tw-hJf">
+                                <rect key="frame" x="16" y="76" width="343" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="ZAM-iY-1gG"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="UZF-bE-0d1"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fg1-tw-hJf" firstAttribute="leading" secondItem="UZF-bE-0d1" secondAttribute="leading" constant="16" id="1e0-au-EDq"/>
+                            <constraint firstItem="UZF-bE-0d1" firstAttribute="trailing" secondItem="fg1-tw-hJf" secondAttribute="trailing" constant="16" id="4DM-e2-4nB"/>
+                            <constraint firstItem="fg1-tw-hJf" firstAttribute="top" secondItem="UZF-bE-0d1" secondAttribute="top" constant="32" id="4Xn-fN-tsG"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DHn-tJ-4h1">
                         <barButtonItem key="leftBarButtonItem" id="aEy-WR-oVm">

@@ -106,17 +106,17 @@
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
     cell.delegate  = self;
-//    if(tweet.favorited == YES){
-//        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-//    } else if (tweet.favorited == NO){
-//        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
-//    }
-//    if(tweet.retweeted == YES){
-//        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
-//    }
-//    if(tweet.retweeted == NO){
-//        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
-//    }
+    if(tweet.favorited == YES){
+        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
+    } else if (tweet.favorited == NO){
+        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
+    }
+    if(tweet.retweeted == YES){
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
+    }
+    if(tweet.retweeted == NO){
+        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
+    }
     cell.tweet = tweet;
     return cell;
 }
@@ -162,7 +162,7 @@
     [self.homeTimelineTableView reloadData];
 }
 
-- (void)didunRetweet:(Tweet *)tweet:(nonnull Tweet *)tweet {
+- (void)didunRetweet:(nonnull Tweet *)tweet {
     [self.arrayOfTweets removeObject:tweet];
     [self.homeTimelineTableView reloadData];
 }

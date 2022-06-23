@@ -26,7 +26,7 @@
 
 - (IBAction)didClose:(id)sender {
 //    [self dismissViewControllerAnimated:true completion:nil];
-    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TimelineViewController"] animated:YES];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)didTapPost:(id)sender {
             [[APIManager shared] postStatusWithText:self.composeTweetTextField.text completion:^(Tweet *tweet, NSError *error) {
@@ -37,7 +37,7 @@
                     [self.delegate didTweet:tweet];
                     NSLog(@"Compose Tweet Success!");
 //                    [self dismissViewControllerAnimated:true completion:nil];
-                    [self.navigationController pushViewController:[self.storyboard instantiateViewControllerWithIdentifier:@"TimelineViewController"] animated:YES];
+                    [self.navigationController popViewControllerAnimated:YES];
 
 
                 }

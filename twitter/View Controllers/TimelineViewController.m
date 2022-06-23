@@ -13,14 +13,20 @@
 #import "Tweet.h"
 #import "TweetCell.h"
 #import "ComposeViewController.h"
+#import "DetailTweetViewController.h"
 
-@interface TimelineViewController () <ComposeViewControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface TimelineViewController () <ComposeViewControllerDelegate, TweetCellDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *homeTimelineTableView;
 @property (strong, nonatomic) NSMutableArray *arrayOfTweets;
 
 @end
 
 @implementation TimelineViewController
+- (IBAction)didTapCompose:(id)sender {
+    ComposeViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
+    viewController.delegate = self;
+    [self.navigationController pushViewController: viewController animated:YES];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -99,17 +105,19 @@
     cell.userScreenNameLabel.text = tweet.user.screenName;
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
-    if(tweet.favorited == YES){
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-    } else if (tweet.favorited == NO){
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
-    }
-    if(tweet.retweeted == YES){
-        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
-    }
-    if(tweet.retweeted == NO){
-        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
-    }
+    cell.delegate  = self;
+//    if(tweet.favorited == YES){
+//        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
+//    } else if (tweet.favorited == NO){
+//        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
+//    }
+//    if(tweet.retweeted == YES){
+//        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
+//    }
+//    if(tweet.retweeted == NO){
+//        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
+//    }
+    cell.tweet = tweet;
     return cell;
 }
 
@@ -136,16 +144,26 @@
 
 }
 
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-   UINavigationController *navigationController = [segue destinationViewController];
-   ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
-   composeController.delegate = self;
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DetailTweetViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTweetViewController"];
+    Tweet *tweet = self.arrayOfTweets[indexPath.row];
+    viewController.tweet = tweet;
+    [self.navigationController pushViewController: viewController animated:YES];
 }
+
+//- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+//   UINavigationController *navigationController = [segue destinationViewController];
+//   ComposeViewController *composeController = (ComposeViewController*)navigationController.topViewController;
+//   composeController.delegate = self;
+//}
 
 - (void)didTweet:(nonnull Tweet *)tweet {
     [self.arrayOfTweets insertObject:tweet atIndex:0];
     [self.homeTimelineTableView reloadData];
 }
 
+- (void)didunRetweet:(Tweet *)tweet:(nonnull Tweet *)tweet {
+    [self.arrayOfTweets removeObject:tweet];
+    [self.homeTimelineTableView reloadData];
+}
 @end

@@ -8,13 +8,15 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+//#import "ComposeViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
-//@protocol TweetCellDelegate <NSObject>
-//
+@protocol TweetCellDelegate
+
 //- (void)didTapFavorite:(Tweet *)tweet;
-//- (void)didTapRetweet:(Tweet *)tweet;
-//@end
+- (void)didTweet:(Tweet *)tweet;
+- (void)didunRetweet:(Tweet *)tweet;
+@end
 
 
 @interface TweetCell : UITableViewCell
@@ -26,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (nonatomic,strong) Tweet *tweet;
-//@property (nonatomic,weak) id<TweetCellDelegate> delegate;
+@property (nonatomic,weak) id<TweetCellDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 

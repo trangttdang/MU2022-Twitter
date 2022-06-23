@@ -11,6 +11,7 @@
 #import "User.h"
 #import "APIManager.h"
 #import "DateTools.h"
+#import "TimelineViewController.h"
 
 @implementation TweetCell
 
@@ -37,7 +38,7 @@
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet retweet count %d", tweet.retweetCount);
                 
-//                [self.delegate didTapRetweet:tweet];
+                [self.delegate didTweet:self.tweet];
                 [self refreshData];
             }
         }];
@@ -52,7 +53,7 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet retweet count %d", tweet.retweetCount);
-//                [self.delegate didTapRetweet:tweet];
+                [self.delegate didunRetweet:tweet];
                 [self refreshData];
             }
         }];
@@ -104,10 +105,6 @@
 }
 
 - (void)refreshData{
-//    self.userNameLabel.text = self.tweet.user.name;
-//    self.textLabel.text = self.tweet.text;
-//    self.dateCreatedLabel.text = self.tweet.createdAtString;
-//    self.userScreenNameLabel.text = self.tweet.user.screenName;
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
 }

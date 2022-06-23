@@ -59,17 +59,17 @@
         // Convert Date to String
         self.createdAtString = [date shortTimeAgoSinceNow];
         
-//        //for tweet detail page
-//        NSDateFormatter *formatterTweetDetail = [[NSDateFormatter alloc] init];
-//        // Configure the input format to parse the date string
-//        formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
-//        // Convert String to Date
-//        NSDate *dateTweetDetail = [formatter dateFromString:createdAtOriginalString];
-//        //Configure output format
-//        formatterTweetDetail.dateStyle = NSDateFormatterShortStyle;
-//        formatterTweetDetail.timeStyle = NSDateFormatterNoStyle;
-//        // Convert Date to String
-//        self.createdAtString = [formatterTweetDetail stringFromDate:dateTweetDetail];
+        //for tweet detail page
+        NSDateFormatter *formatterTweetDetail = [[NSDateFormatter alloc] init];
+        // Configure the input format to parse the date string
+        formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
+        // Convert String to Date
+        NSDate *dateTweetDetail = [formatter dateFromString:createdAtOriginalString];
+        //Configure output format
+        formatterTweetDetail.dateStyle = NSDateFormatterShortStyle;
+        formatterTweetDetail.timeStyle = NSDateFormatterNoStyle;
+        // Convert Date to String
+        self.createdAtSpecificString = [formatterTweetDetail stringFromDate:dateTweetDetail];
         
 
     }

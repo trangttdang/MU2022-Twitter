@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *textLabel;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
+@property (weak, nonatomic) IBOutlet UILabel *datePostedLabel;
 
 @end
 
@@ -33,6 +34,7 @@
     NSData *urlData = [NSData dataWithContentsOfURL:url];
     
     self.profileImageView.image = [UIImage imageWithData:urlData];
+    self.datePostedLabel.text = self.tweet.createdAtSpecificString;
 }
 
 /*

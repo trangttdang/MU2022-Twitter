@@ -131,7 +131,8 @@
     [cell.retweetButton setImage:[UIImage imageNamed:tweet.retweetImageAddress] forState:UIControlStateNormal];
     
     cell.textTextView.text = tweet.text;
-
+    cell.textTextView.editable = NO;
+    cell.textTextView.dataDetectorTypes = UIDataDetectorTypeAll;
     
 
 //    NSURL *urlOfMediaUrl = [NSURL URLWithString:tweet.entities.media[@"media_url"]];

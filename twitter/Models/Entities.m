@@ -23,7 +23,7 @@
             NSLog(@"Media Tweet: %@", self.media);
             NSDictionary *media = self.media;
 //            self.mediaURL = [NSString stringWithFormat:@"%@", media[@"sizes"]];
-//            NSLog(@"Media Tweet: %@", media[@"id"]);
+            NSLog(@"Media Tweet: %@", media[@"id"]);
             
         }
     // Initialize any other properties

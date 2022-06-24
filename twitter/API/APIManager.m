@@ -66,7 +66,7 @@ static NSString * const baseURLString = @"https://api.twitter.com";
 //    }];
 //}
 
-- (void)getHomeTimelineWithCompletion:(NSNumber *)countLoaded:(void(^)(NSMutableArray *tweets, NSError *error))completion{
+- (void)getHomeTimelineWithCompletion:(NSNumber *)countLoaded completion:(void(^)(NSMutableArray *tweets, NSError *error))completion{
     // Create a GET Request
     NSDictionary *parameters = @{@"count": countLoaded};
     [self GET:@"1.1/statuses/home_timeline.json"

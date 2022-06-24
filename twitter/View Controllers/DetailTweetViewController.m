@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *datePostedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
+@property (weak, nonatomic) IBOutlet UITextView *textTextView;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @end
 
@@ -39,7 +40,11 @@
     self.datePostedLabel.text = self.tweet.createdAtSpecificString;
     [self.retweetButton setImage:[UIImage imageNamed:self.tweet.retweetImageAddress] forState:UIControlStateNormal];
     [self.favoriteButton setImage:[UIImage imageNamed:self.tweet.favoriteImageAddress] forState:UIControlStateNormal];
-
+    
+    self.textTextView.text = self.tweet.text;;
+    self.textTextView.editable = NO;
+    self.textTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
 //    if(self.tweet.favorited == YES){
 //        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
 //    } else if (self.tweet.favorited == NO){

@@ -57,18 +57,25 @@
         // Initialize user
         NSDictionary *user = dictionary[@"user"];
         self.user = [[User alloc] initWithDictionary:user];
-        
         // Initialize entities
-        NSDictionary *entities = dictionary[@"entities"];
-        self.entities = [[Entities alloc] initWithDictionary:entities];
+//        NSDictionary *entities = dictionary[@"entities"];
+//        self.entities = [[Entities alloc] initWithDictionary:entities];
 //        NSDictionary *media = self.entities.media;
-//        NSLog(@"Media: %@", media[@"media_url"]);
+//        NSLog(@"Media: %@", media);
 //        NSDictionary *media = self.entities[@"media"];
 //        self.entities.media = media;
 //        if(self.entities.media){
 //                NSLog(@"Media Tweet: %@", self.entities.media[@"media_url"]);
 //        }
-        
+            //media is NSArray
+        self.mediaUrlHttps= dictionary[@"entities"][@"media"][0][@"media_url_https"];
+        NSLog(@"print media Element %@", self.mediaUrlHttps);
+//        NSLog(@"Media Tweet: %@", media_url_https);
+//        NSDictionary *media = dictionary[@"entities"][@"media"];
+//        for(id mediaElement in media){
+//            NSLog(@"print media Element %@", mediaElement[@"media_url_https"]);
+//        }
+//
         
         // Format and set createdAtString
         // Format createdAt date string

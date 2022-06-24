@@ -135,9 +135,9 @@
     cell.textTextView.dataDetectorTypes = UIDataDetectorTypeAll;
     
 
-//    NSURL *urlOfMediaUrl = [NSURL URLWithString:tweet.entities.media[@"media_url"]];
-//    NSData *mediaData = [NSData dataWithContentsOfURL:urlOfMediaUrl];
-//    cell.imageView.image = [UIImage imageWithData:mediaData];
+    NSURL *mediaUrlHttps = [NSURL URLWithString:tweet.mediaUrlHttps];
+    NSData *mediaData = [NSData dataWithContentsOfURL:mediaUrlHttps];
+    cell.imageView.image = [UIImage imageWithData:mediaData];
 //
     cell.delegate  = self;
     return cell;
@@ -209,7 +209,7 @@
 //        [self.homeTimelineTableView reloadData];
 //    }];
     
-    [[APIManager shared] getHomeTimelineWithCompletion:countLoaded :^(NSMutableArray *tweets, NSError *error) {
+    [[APIManager shared] getHomeTimelineWithCompletion:countLoaded completion:^(NSMutableArray *tweets, NSError *error) {
                 if (tweets) {
                     NSLog(@"😎😎😎 Successfully loaded home timeline");
                     for (Tweet *tweet in tweets) {

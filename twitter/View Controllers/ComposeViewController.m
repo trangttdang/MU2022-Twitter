@@ -11,7 +11,8 @@
 #import "TimelineViewController.h"
 
 @interface ComposeViewController ()
-@property (weak, nonatomic) IBOutlet UITextField *composeTweetTextField;
+@property (weak, nonatomic) IBOutlet UITextView *composeTweetTextView;
+@property (weak, nonatomic) IBOutlet UILabel *charLeftLabel;
 
 
 @end
@@ -21,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.composeTweetTextView.delegate = self;
 }
 
 
@@ -29,7 +31,7 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)didTapPost:(id)sender {
-            [[APIManager shared] postStatusWithText:self.composeTweetTextField.text completion:^(Tweet *tweet, NSError *error) {
+            [[APIManager shared] postStatusWithText:self.composeTweetTextView.text completion:^(Tweet *tweet, NSError *error) {
                 if(error){
                     NSLog(@"Error composing Tweet: %@", error.localizedDescription);
                 }
@@ -57,5 +59,22 @@
 */
 
 
+//- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+//    // TODO: Check the proposed new text character count
+//
+//    // TODO: Allow or disallow the new text
+//    // Set the max character limit
+//    int characterLimit = 140;
+//
+//    // Construct what the new text would be if we allowed the user's latest edit
+//    NSString *newText = [self.composeTweetTextView.text stringByReplacingCharactersInRange:range withString:text];
+//
+//    // TODO: Update character count label
+//    NSString *characterLeft = [NSString stringWithFormat:@"%lu", 140 - newText.length];
+//
+//    self.charLeftLabel.text = [characterLeft stringByAppendingString:@"/140"];
+//    // Should the new text should be allowed? True/False
+//    return newText.length < characterLimit;
+//}
 
 @end

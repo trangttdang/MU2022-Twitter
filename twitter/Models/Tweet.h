@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *createdAtSpecificString; // Display specific date
 @property (nonatomic, strong) NSString *favoriteImageAddress;
 @property (nonatomic, strong) NSString *retweetImageAddress;
-@property (nonatomic, strong) NSString *urlString;
+@property (nonatomic, strong) NSString *mediaUrlHttps;
 @property (nonatomic, strong) Entities *entities;
 
 // For Retweets

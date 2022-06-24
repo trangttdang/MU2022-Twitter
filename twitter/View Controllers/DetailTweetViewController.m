@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userScreenNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *textLabel;
 @property (weak, nonatomic) IBOutlet UILabel *retweetCountLabel;
 @property (weak, nonatomic) IBOutlet UILabel *datePostedLabel;
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
@@ -29,7 +28,7 @@
     // Do any additional setup after loading the view.
     self.userNameLabel.text = self.tweet.user.name;
     self.userScreenNameLabel.text = self.tweet.user.screenName;
-    self.textLabel.text = self.tweet.text;
+    self.textTextView.text = self.tweet.text;
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
     NSString *URLString = self.tweet.user.profilePicture;

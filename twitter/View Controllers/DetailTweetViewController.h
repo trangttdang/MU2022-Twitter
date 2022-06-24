@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 @protocol DetailTweetViewControllerDelegate
 - (void)didTweet:(Tweet *)tweet;
-- (void)didunRetweet:(Tweet *)tweet;
+- (void)didUnRetweet:(Tweet *)tweet;
 @end
 @interface DetailTweetViewController : UIViewController
 @property (strong,nonatomic) Tweet *tweet;

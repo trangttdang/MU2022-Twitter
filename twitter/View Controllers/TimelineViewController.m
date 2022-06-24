@@ -30,6 +30,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self loadMoreData:20];
 
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(beginRefresh:) forControlEvents:(UIControlEventValueChanged)];
@@ -39,21 +40,41 @@
     self.homeTimelineTableView.delegate = self;
     
     // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
-        if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (Tweet *tweet in tweets) {
-                NSString *text = tweet.text;
-                NSLog(@"%@",text);
-            }
-            self.arrayOfTweets = tweets;
-            NSLog(@"%@",self.arrayOfTweets);
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-        }
-
-        [self.homeTimelineTableView reloadData];
-    }];
+//    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
+//        if (tweets) {
+//            NSLog(@"😎😎😎 Successfully loaded home timeline");
+//            for (Tweet *tweet in tweets) {
+//                NSString *text = tweet.text;
+//                NSLog(@"%@",text);
+//            }
+//            self.arrayOfTweets = tweets;
+//            NSLog(@"%@",self.arrayOfTweets);
+//        } else {
+//            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+//        }
+//
+//        [self.homeTimelineTableView reloadData];
+//    }];
+    
+//    NSNumber *countLoaded = [NSNumber numberWithInteger:20];
+//
+//
+//    [[APIManager shared] getHomeTimelineWithCompletion:countLoaded :^(NSMutableArray *tweets, NSError *error) {
+//                if (tweets) {
+//                    NSLog(@"😎😎😎 Successfully loaded home timeline");
+//                    for (Tweet *tweet in tweets) {
+//                        NSString *text = tweet.text;
+//                        NSLog(@"%@",text);
+//                    }
+//                    self.arrayOfTweets = tweets;
+//                    NSLog(@"%@",self.arrayOfTweets);
+//                } else {
+//                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+//                }
+//
+//                [self.homeTimelineTableView reloadData];
+//    }];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -92,62 +113,150 @@
     TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     
-    cell.tweet = tweet;
     
     NSString *URLString = tweet.user.profilePicture;
     NSURL *url = [NSURL URLWithString:URLString];
     NSData *urlData = [NSData dataWithContentsOfURL:url];
-    
+    cell.tweet = tweet;
     cell.profileImageView.image = [UIImage imageWithData:urlData];
-    cell.textLabel.text = tweet.text;
+    
     cell.userNameLabel.text = tweet.user.name;
     cell.dateCreatedLabel.text = tweet.createdAtString;
     cell.userScreenNameLabel.text = tweet.user.screenName;
     cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
     cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    cell.tweet.favoriteImageAddress =tweet.favoriteImageAddress;
+    cell.tweet.retweetImageAddress = tweet.retweetImageAddress;
+    [cell.favoriteButton setImage:[UIImage imageNamed:tweet.favoriteImageAddress] forState:UIControlStateNormal];
+    [cell.retweetButton setImage:[UIImage imageNamed:tweet.retweetImageAddress] forState:UIControlStateNormal];
+    
+    cell.textTextView.text = tweet.text;
+
+    
+
+//    NSURL *urlOfMediaUrl = [NSURL URLWithString:tweet.entities.media[@"media_url"]];
+//    NSData *mediaData = [NSData dataWithContentsOfURL:urlOfMediaUrl];
+//    cell.imageView.image = [UIImage imageWithData:mediaData];
+//
     cell.delegate  = self;
-    if(tweet.favorited == YES){
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-    } else if (tweet.favorited == NO){
-        [cell.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
-    }
-    if(tweet.retweeted == YES){
-        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
-    }
-    if(tweet.retweeted == NO){
-        [cell.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
-    }
-    cell.tweet = tweet;
     return cell;
 }
 
 - (void)beginRefresh:(UIRefreshControl *)refreshControl {
 
     // Get timeline
-    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
-        if (tweets) {
-            NSLog(@"😎😎😎 Successfully loaded home timeline");
-            for (Tweet *tweet in tweets) {
-                NSString *text = tweet.text;
-            }
-            self.arrayOfTweets = tweets;
-//            NSLog(@"%@",tweets);
-//            NSLog(@"%@",self.arrayOfTweets);
-        } else {
-            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-        }
-
-        [self.homeTimelineTableView reloadData];
-        [refreshControl endRefreshing];
-
-        }];
+//    [[APIManager shared] getHomeTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
+//        if (tweets) {
+//            NSLog(@"😎😎😎 Successfully loaded home timeline");
+//            for (Tweet *tweet in tweets) {
+//                NSLog(@"%@",tweet);
+//            }
+//            self.arrayOfTweets = tweets;
+//
+//        } else {
+//            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+//        }
+//
+//        [self.homeTimelineTableView reloadData];
+//        [refreshControl endRefreshing];
+//
+//        }];
+    
+//    NSNumber *countLoaded = [NSNumber numberWithInteger:20];
+//
+//    [[APIManager shared] getHomeTimelineWithCompletion:countLoaded :^(NSMutableArray *tweets, NSError *error) {
+//                if (tweets) {
+//                    NSLog(@"😎😎😎 Successfully loaded home timeline");
+//                    for (Tweet *tweet in tweets) {
+//                        NSString *text = tweet.text;
+//                        NSLog(@"%@",text);
+//                    }
+//                    self.arrayOfTweets = tweets;
+//                    NSLog(@"%@",self.arrayOfTweets);
+//                } else {
+//                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+//                }
+//
+//                [self.homeTimelineTableView reloadData];
+//    }];
+    [self loadMoreData:20];
+    [refreshControl endRefreshing];
 
 }
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if(indexPath.row + 1 == [self.arrayOfTweets count]){
+        [self loadMoreData:[self.arrayOfTweets count] + 20];
+//        [self loadMoreData];
+    }
+}
+-(void)loadMoreData:(NSInteger)count{
+    NSNumber *countLoaded = [NSNumber numberWithInteger:count];
+//    [[APIManager shared] getHomeTimelineWithCompletion:NSInteger *countLoaded  ^(NSMutableArray *tweets, NSError *error) {
+//        if (tweets) {
+//            NSLog(@"😎😎😎 Successfully loaded home timeline");
+//            for (Tweet *tweet in tweets) {
+//                NSString *text = tweet.text;
+//                NSLog(@"%@",text);
+//            }
+//            self.arrayOfTweets = tweets;
+//            NSLog(@"%@",self.arrayOfTweets);
+//        } else {
+//            NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+//        }
+//
+//        [self.homeTimelineTableView reloadData];
+//    }];
+    
+    [[APIManager shared] getHomeTimelineWithCompletion:countLoaded :^(NSMutableArray *tweets, NSError *error) {
+                if (tweets) {
+                    NSLog(@"😎😎😎 Successfully loaded home timeline");
+                    for (Tweet *tweet in tweets) {
+                        NSString *text = tweet.text;
+                        NSLog(@"%@",tweet.text);
+                    }
+                    
+                    self.arrayOfTweets = tweets;
+                    NSLog(@"%@",self.arrayOfTweets);
+                } else {
+                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+                }
+        
+                [self.homeTimelineTableView reloadData];
+    }];
+
+}
+    
+      // ... Create the NSURLRequest (myRequest) ...
+
+    // Configure session so that completion handler is executed on main UI thread
+//    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+//
+//    NSURLSession *session  = [NSURLSession sessionWithConfiguration:configuration delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+
+//    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *requestError) {
+//        if (requestError != nil) {
+//
+//        }
+//        else
+//        {
+//            // Update flag
+//            self.isMoreDataLoading = false;
+//
+//            // ... Use the new data to update the data source ...
+//
+//            // Reload the tableView now that there is new data
+//            [self.tableView reloadData];
+//        }
+//    }];
+//    [task resume];
+//}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     DetailTweetViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"DetailTweetViewController"];
     Tweet *tweet = self.arrayOfTweets[indexPath.row];
     viewController.tweet = tweet;
+    
     [self.navigationController pushViewController: viewController animated:YES];
 }
 
@@ -162,8 +271,8 @@
     [self.homeTimelineTableView reloadData];
 }
 
-- (void)didunRetweet:(nonnull Tweet *)tweet {
-    [self.arrayOfTweets removeObject:tweet];
+- (void)didUnRetweet:(nonnull Tweet *)tweet {
+//    [self.arrayOfTweets removeObject:tweet];
     [self.homeTimelineTableView reloadData];
 }
 @end

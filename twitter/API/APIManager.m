@@ -53,10 +53,24 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     return self;
 }
 
-- (void)getHomeTimelineWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion {
+//- (void)getHomeTimelineWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion {
+//    // Create a GET Request
+//    [self GET:@"1.1/statuses/home_timeline.json"
+//       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
+//           // Success
+//           NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+//           completion(tweets, nil);
+//       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+//           // There was a problem
+//           completion(nil, error);
+//    }];
+//}
+
+- (void)getHomeTimelineWithCompletion:(NSNumber *)countLoaded:(void(^)(NSMutableArray *tweets, NSError *error))completion{
     // Create a GET Request
+    NSDictionary *parameters = @{@"count": countLoaded};
     [self GET:@"1.1/statuses/home_timeline.json"
-       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
+       parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
            // Success
            NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
            completion(tweets, nil);
@@ -79,7 +93,6 @@ static NSString * const baseURLString = @"https://api.twitter.com";
 }
 
 - (void)favorite:(Tweet *)tweet completion:(void (^)(Tweet *tweet, NSError *error))completion {
-
     NSString *urlString = @"1.1/favorites/create.json";
     NSDictionary *parameters = @{@"id": tweet.idStr};
     [self POST:urlString parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSDictionary *  _Nullable tweetDictionary) {

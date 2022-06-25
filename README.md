@@ -54,8 +54,8 @@ Here's a walkthrough of implemented user stories:
 
 <!-- <img src='https://i.imgur.com/PVATrqm.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' /> -->
 
-BEFORE https://i.imgur.com/PVATrqm.gif
-AFTER https://i.imgur.com/f870SFj.mp4
+- BEFORE https://i.imgur.com/PVATrqm.gif
+- AFTER https://i.imgur.com/f870SFj.mp4
 
 GIF created with [Kap](https://getkap.co/).
 

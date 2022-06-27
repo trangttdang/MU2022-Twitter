@@ -28,6 +28,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSString *favoriteImageAddress;
 @property (nonatomic, strong) NSString *retweetImageAddress;
 @property (nonatomic, strong) NSString *mediaUrlHttps;
+@property (nonatomic) NSString *inReplyToStatusIdString;
+@property (nonatomic) NSString *inReplyToScreenName;
 @property (nonatomic, strong) Entities *entities;
 
 // For Retweets

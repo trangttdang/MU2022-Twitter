@@ -10,7 +10,7 @@
 #import "APIManager.h"
 #import "TimelineViewController.h"
 
-@interface ComposeViewController ()
+@interface ComposeViewController () <UITextViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextView *composeTweetTextView;
 @property (weak, nonatomic) IBOutlet UILabel *charLeftLabel;
 
@@ -22,6 +22,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    self.composeTweetTextView.text = [self.username stringByAppendingString:@" "];
     self.composeTweetTextView.delegate = self;
 }
 
@@ -31,19 +32,41 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)didTapPost:(id)sender {
-            [[APIManager shared] postStatusWithText:self.composeTweetTextView.text completion:^(Tweet *tweet, NSError *error) {
-                if(error){
-                    NSLog(@"Error composing Tweet: %@", error.localizedDescription);
-                }
-                else{
-                    [self.delegate didTweet:tweet];
-                    NSLog(@"Compose Tweet Success!");
-//                    [self dismissViewControllerAnimated:true completion:nil];
-                    [self.navigationController popViewControllerAnimated:YES];
+    NSLog(@"print status id %@", self.inReplyToStatusID);
+    NSLog(@"print status screenname %@", self.inReplyToScreenName);
+    if(!self.inReplyToStatusID){
+        [[APIManager shared] postStatusWithText:self.composeTweetTextView.text completion:^(Tweet *tweet, NSError *error) {
+                    if(error){
+                        NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+                    }
+                    else{
+                        tweet.inReplyToStatusIdString = self.inReplyToStatusID;
+                        tweet.inReplyToScreenName = self.inReplyToScreenName;
+                        [self.delegate didTweet:tweet];
+                        NSLog(@"Compose Tweet Success!");
+    //                    [self dismissViewControllerAnimated:true completion:nil];
+                        [self.navigationController popViewControllerAnimated:YES];
 
-                }
-                
-            }];
+                    }
+                }];
+    } else{
+//        [self.composeTweetTextView.text stringByAppendingString: self.username];
+        [[APIManager shared] reply:self.composeTweetTextView.text inReplyToStatus:self.inReplyToStatusID completion:^(Tweet *tweet, NSError *error) {
+                    if(error){
+                        NSLog(@"Error composing Tweet: %@", error.localizedDescription);
+                    }
+                    else{
+                        tweet.inReplyToStatusIdString = self.inReplyToStatusID;
+                        tweet.inReplyToScreenName = self.inReplyToScreenName;
+                        [self.delegate didTweet:tweet];
+                        NSLog(@"Compose Tweet Success!");
+    //                    [self dismissViewControllerAnimated:true completion:nil];
+                        [self.navigationController popViewControllerAnimated:YES];
+
+                    }
+                }];
+    }
+    
 }
 
 

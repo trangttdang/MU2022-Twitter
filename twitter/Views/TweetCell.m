@@ -12,12 +12,18 @@
 #import "APIManager.h"
 #import "DateTools.h"
 #import "TimelineViewController.h"
+#import "ProfileViewController.h"
 
 @implementation TweetCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
+    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
+    [self.profileImageView addGestureRecognizer:profileTapGestureRecognizer];
+    [self.profileImageView setUserInteractionEnabled:YES];
+
+
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -26,6 +32,15 @@
     // Configure the view for the selected state
 }
 - (IBAction)didTapRetweet:(id)sender {
+    [self retweet];
+    
+}
+
+- (IBAction)didTapFavorite:(id)sender {
+    [self favorite];
+}
+
+- (void)retweet{
     if(self.tweet.retweeted == NO){
         self.tweet.retweeted = YES;
         self.tweet.retweetCount += 1;
@@ -62,10 +77,9 @@
             }
         }];
     }
-    // Send a POST request to the POST favorites/create endpoint
-    
 }
-- (IBAction)didTapFavorite:(id)sender {
+
+- (void)favorite{
     if(self.tweet.favorited == NO){
         //Update the local tweet model
         self.tweet.favorited = YES;
@@ -103,6 +117,11 @@
         }];
     }
 }
+
+- (void)didTapUserProfile:(UITapGestureRecognizer *)sender {
+    [self.delegate didTapProfileImage:self.tweet];
+}
+
 
 - (void)refreshData{
     [self.retweetButton setImage:[UIImage imageNamed:self.tweet.retweetImageAddress] forState:UIControlStateNormal];

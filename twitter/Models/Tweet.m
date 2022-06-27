@@ -9,6 +9,7 @@
 #import "User.h"
 #import "DateTools.h"
 #import "Entities.h"
+#import "APIManager.h"
 
 @implementation Tweet
 
@@ -20,6 +21,8 @@
     }
     return tweets;
 }
+
+
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary {
     self = [super init];
@@ -34,6 +37,7 @@
             // Change tweet to original tweet
             dictionary = originalTweet;
         }
+        
         self.idStr = dictionary[@"id_str"];
         self.text = dictionary[@"text"];
         self.favoriteCount = [dictionary[@"favorite_count"] intValue];
@@ -52,7 +56,9 @@
             self.retweetImageAddress = @"retweet-icon";
         }
         
-        
+        NSLog(@"Tweet: %@", dictionary);
+        self.inReplyToStatusIdString = dictionary[@"in_reply_to_status_id_str"];
+        self.inReplyToScreenName = dictionary[@"in_reply_to_screen_name"];
         
         // Initialize user
         NSDictionary *user = dictionary[@"user"];
@@ -75,6 +81,7 @@
 //        for(id mediaElement in media){
 //            NSLog(@"print media Element %@", mediaElement[@"media_url_https"]);
 //        }
+        
 //
         
         // Format and set createdAtString
@@ -90,16 +97,13 @@
         self.createdAtString = [date shortTimeAgoSinceNow];
         
         //for tweet detail page
-        NSDateFormatter *formatterTweetDetail = [[NSDateFormatter alloc] init];
-        // Configure the input format to parse the date string
-        formatter.dateFormat = @"E MMM d HH:mm:ss Z y";
         // Convert String to Date
         NSDate *dateTweetDetail = [formatter dateFromString:createdAtOriginalString];
         //Configure output format
-        formatterTweetDetail.dateStyle = NSDateFormatterShortStyle;
-        formatterTweetDetail.timeStyle = NSDateFormatterNoStyle;
+        formatter.dateStyle = NSDateFormatterShortStyle;
+        formatter.timeStyle = NSDateFormatterShortStyle;
         // Convert Date to String
-        self.createdAtSpecificString = [formatterTweetDetail stringFromDate:dateTweetDetail];
+        self.createdAtSpecificString = [formatter stringFromDate:dateTweetDetail];
     }
     return self;
 }

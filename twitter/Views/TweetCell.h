@@ -8,14 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "Tweet.h"
+#import "User.h"
 //#import "ComposeViewController.h"
 
 NS_ASSUME_NONNULL_BEGIN
 @protocol TweetCellDelegate
-
-//- (void)didTapFavorite:(Tweet *)tweet;
 - (void)didTweet:(Tweet *)tweet;
 - (void)didUnRetweet:(Tweet *)tweet;
+- (void)didTapProfileImage:(Tweet *) tweet;
+- (void)didTapFavorite:(Tweet *)tweet;
+
+
 @end
 
 
@@ -33,6 +36,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @property (weak, nonatomic) IBOutlet UITextView *textTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *mediaImageView;
+//@property (weak, nonatomic) IBOutlet UIButton *profileImageButton;
+@property (weak, nonatomic) IBOutlet UILabel *inReplyToScreenNameLabel;
 
 @end
 

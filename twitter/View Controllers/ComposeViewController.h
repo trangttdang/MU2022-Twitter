@@ -19,6 +19,10 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 @interface ComposeViewController : UIViewController
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
+@property (nonatomic) NSString *inReplyToStatusID;
+@property (nonatomic) NSString *inReplyToScreenName;
+@property (nonatomic) NSString *username;
+
 @end
 
 NS_ASSUME_NONNULL_END

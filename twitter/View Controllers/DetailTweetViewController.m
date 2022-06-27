@@ -8,8 +8,10 @@
 
 #import "DetailTweetViewController.h"
 #import "APIManager.h"
+#import "ComposeViewController.h"
+#import "TweetCell.h"
 
-@interface DetailTweetViewController ()
+@interface DetailTweetViewController () <ComposeViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userScreenNameLabel;
@@ -18,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (weak, nonatomic) IBOutlet UILabel *favoriteCountLabel;
 @property (weak, nonatomic) IBOutlet UITextView *textTextView;
+@property (weak, nonatomic) IBOutlet UIImageView *mediaImageView;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
 @end
 
@@ -44,17 +47,16 @@
     self.textTextView.editable = NO;
     self.textTextView.dataDetectorTypes = UIDataDetectorTypeAll;
     
-//    if(self.tweet.favorited == YES){
-//        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon-red"] forState:UIControlStateNormal];
-//    } else if (self.tweet.favorited == NO){
-//        [self.favoriteButton setImage:[UIImage imageNamed:@"favor-icon"] forState:UIControlStateNormal];
-//    }
-//    if(self.tweet.retweeted == YES){
-//        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon-green"] forState:UIControlStateNormal];
-//    }
-//    if(self.tweet.retweeted == NO){
-//        [self.retweetButton setImage:[UIImage imageNamed:@"retweet-icon"] forState:UIControlStateNormal];
-//    }
+    NSURL *mediaUrlHttps = [NSURL URLWithString:self.tweet.mediaUrlHttps];
+    NSData *mediaData = [NSData dataWithContentsOfURL:mediaUrlHttps];
+    
+    if(self.tweet.mediaUrlHttps){
+        self.mediaImageView.image = [UIImage imageWithData:mediaData];
+        self.mediaImageView.layer.cornerRadius = 5;
+    } else{
+        self.mediaImageView.hidden = YES;
+    }
+//    self.delegate = self;
 }
 
 /*
@@ -66,6 +68,14 @@
     // Pass the selected object to the new view controller.
 }
 */
+- (IBAction)didTapReply:(id)sender {
+    ComposeViewController *viewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ComposeViewController"];
+    viewController.delegate = self;
+    viewController.inReplyToStatusID = self.tweet.idStr;
+    viewController.inReplyToScreenName = self.tweet.user.screenName;
+    viewController.username = @"@trangttdang";
+    [self.navigationController pushViewController: viewController animated:YES];
+}
 
 - (IBAction)didTapRetweet:(id)sender {
     if(self.tweet.retweeted == NO){
@@ -81,7 +91,7 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet retweet count %d", tweet.retweetCount);
-                
+
                 [self.delegate didTweet:self.tweet];
             }
         }];
@@ -103,11 +113,11 @@
             }
         }];
     }
-
     
 }
+
 - (IBAction)didTapFavorite:(id)sender {
-    if(self.tweet.favorited == NO){
+        if(self.tweet.favorited == NO){
         //Update the local tweet model
         self.tweet.favorited = YES;
         self.tweet.favoriteCount += 1;
@@ -122,7 +132,7 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet favorite count %d", tweet.favoriteCount);
-//                [self.delegate didTapFavorite:tweet];
+                [self.delegate didTapFavorite:tweet];
             }
         }];
     } else if(self.tweet.favorited == YES){
@@ -140,11 +150,41 @@
             else{
                 NSLog(@"Successfully favorited the following Tweet: %@", tweet.text);
                 NSLog(@"Tweet favorite count %d", tweet.favoriteCount);
-//                [self.delegate didTapFavorite:tweet];
+                [self.delegate didTapFavorite:tweet];
             }
         }];
     }
     
 }
+
+- (void)didTweet:(nonnull Tweet *)tweet {
+    self.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
+    self.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
+    NSLog(@"It replied");
+//    [self.delegate didTweet:tweet];
+    
+}
+
+//- (void)didUnRetweet:(nonnull Tweet *)tweet {
+//    [self.delegate didUnRetweet:tweet];
+//}
+
+
+
+
+//
+//- (void)didTapProfileImage:(nonnull Tweet *)tweet {
+//    NSLog(@"It works");
+//}
+//
+//
+//- (void)didUnRetweet:(nonnull Tweet *)tweet {
+//
+//}
+//- (void)didFavorite:(Tweet *)tweet {
+//    self.tweet = tweet;
+//}
+
+
 
 @end

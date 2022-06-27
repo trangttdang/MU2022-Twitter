@@ -17,7 +17,12 @@
 //        self.screenName = dictionary[@"screen_name"];
         self.screenName = [@"@" stringByAppendingString:dictionary[@"screen_name"]];
         self.profilePicture = dictionary[@"profile_image_url_https"];
+        self.profileBackgroundPicture = dictionary[@"profile_background_image_url_https"];
+        self.followersCount = [dictionary[@"followers_count"] intValue];
+        self.followingCount = [dictionary[@"friends_count"] intValue];
     // Initialize any other properties
+        self.profileDescription = [NSString stringWithFormat:@"%@", dictionary[@"description"]];
+        self.statusCount = [dictionary[@"statuses_count"] intValue];
     }
     return self;
 }

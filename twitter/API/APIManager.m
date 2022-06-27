@@ -80,10 +80,11 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     }];
 }
 
-- (void)getUserTimelineWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion {
+- (void)getUserTimelineWithCompletion:(NSString *)screenName completion:(void(^)(NSMutableArray *tweets, NSError *error))completion {
     // Create a GET Request
+    NSDictionary *parameters = @{@"screen_name": screenName};
     [self GET:@"1.1/statuses/user_timeline.json"
-       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
+       parameters:parameters progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
            // Success
            NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
            completion(tweets, nil);

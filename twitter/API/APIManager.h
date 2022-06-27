@@ -13,7 +13,7 @@
 @interface APIManager : BDBOAuth1SessionManager
 
 + (instancetype)shared;
-- (void)getUserTimelineWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion;
+- (void)getUserTimelineWithCompletion:(NSString *)screenName completion:(void(^)(NSMutableArray *tweets, NSError *error))completion;
 
 - (void)getHomeTimelineWithCompletion:(NSNumber *)countLoaded completion:(void(^)(NSMutableArray *tweets, NSError *error))completion;
 

@@ -56,7 +56,7 @@ Here's a walkthrough of implemented user stories:
 
 - BEFORE https://i.imgur.com/PVATrqm.gif
 - AFTER https://i.imgur.com/f870SFj.mp4
-- FINAL https://imgur.com/a/7c8wDoG
+- FINAL https://i.imgur.com/f9kOATb.mp4
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes

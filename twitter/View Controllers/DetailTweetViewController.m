@@ -73,7 +73,7 @@
     viewController.delegate = self;
     viewController.inReplyToStatusID = self.tweet.idStr;
     viewController.inReplyToScreenName = self.tweet.user.screenName;
-    viewController.username = @"@trangttdang";
+    viewController.username = self.tweet.user.screenName;
     [self.navigationController pushViewController: viewController animated:YES];
 }
 

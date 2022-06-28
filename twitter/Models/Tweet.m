@@ -56,6 +56,7 @@
             self.retweetImageAddress = @"retweet-icon";
         }
         
+        
         NSLog(@"Tweet: %@", dictionary);
         self.inReplyToStatusIdString = dictionary[@"in_reply_to_status_id_str"];
         self.inReplyToScreenName = dictionary[@"in_reply_to_screen_name"];

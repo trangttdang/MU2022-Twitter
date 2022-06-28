@@ -27,4 +27,5 @@
 
 - (void)unRetweet:(Tweet *)tweet completion:(void (^)(Tweet *tweet, NSError *error))completion;
 - (void)reply:(NSString *)text inReplyToStatus:(NSString *)statusID completion:(void (^)(Tweet *tweet, NSError *error))completion;
+- (void)getUserMentionWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion;
 @end

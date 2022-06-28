@@ -126,6 +126,14 @@
 - (void)refreshData{
     [self.retweetButton setImage:[UIImage imageNamed:self.tweet.retweetImageAddress] forState:UIControlStateNormal];
     [self.favoriteButton setImage:[UIImage imageNamed:self.tweet.favoriteImageAddress] forState:UIControlStateNormal];
+//    self.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", self.tweet.inReplyToScreenName]]];
+//
+//    if(![self.tweet.inReplyToStatusIdString isEqual:[NSNull null]]){
+//    self.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", self.tweet.inReplyToScreenName]]];
+//    } else{
+//        self.inReplyToScreenNameLabel.hidden = YES;
+//    }
+    
     self.retweetCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.retweetCount];
     self.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", self.tweet.favoriteCount];
 }

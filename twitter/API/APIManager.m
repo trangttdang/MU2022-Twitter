@@ -94,6 +94,20 @@ static NSString * const baseURLString = @"https://api.twitter.com";
     }];
 }
 
+- (void)getUserMentionWithCompletion:(void(^)(NSMutableArray *tweets, NSError *error))completion {
+    // Create a GET Request
+    [self GET:@"1.1/statuses/mentions_timeline.json"
+       parameters:nil progress:nil success:^(NSURLSessionDataTask * _Nonnull task, NSMutableArray *  _Nullable tweetDictionaries) {
+           // Success
+           NSMutableArray *tweets = [Tweet tweetsWithArray:tweetDictionaries];
+           completion(tweets, nil);
+       } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+           // There was a problem
+           completion(nil, error);
+    }];
+}
+
+
 - (void)reply:(NSString *)text inReplyToStatus:(NSString *)statusID completion:(void (^)(Tweet *tweet, NSError *error))completion {
     
     NSString *urlString = @"1.1/statuses/update.json";

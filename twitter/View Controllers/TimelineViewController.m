@@ -135,16 +135,21 @@
         cell.mediaImageView.hidden = YES;
     }
     
-    cell.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
-    cell.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
+//    cell.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
+//    cell.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
 //    NSString *replyToScreenName = [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName];
-//    if(![replyToScreenName  isEqual: @"<null>"]){
-//    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]]];
-//    } else{
-//        cell.inReplyToScreenNameLabel.hidden = YES;
-//    }
-    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", cell.tweet.inReplyToScreenName]]];
     
+    
+    if(![tweet.inReplyToStatusIdString isEqual:[NSNull null]]){
+    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]];
+    } else{
+        cell.inReplyToScreenNameLabel.hidden = YES;
+    }
+    
+
+    
+//    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", cell.tweet.inReplyToScreenName]]];
+//
     
 //    UITapGestureRecognizer *profileTapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(didTapUserProfile:)];
     [cell.profileImageView setUserInteractionEnabled:YES];

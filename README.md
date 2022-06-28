@@ -2,7 +2,7 @@
 
 **Twitter** is a basic twitter app to read and compose tweets the [Twitter API](https://apps.twitter.com/).
 
-Time spent: **16** hours spent in total
+Time spent: **20** hours spent in total
 
 ## User Stories
 
@@ -28,15 +28,15 @@ The following **stretch** features are implemented:
 - [x] Be able to **unlike** or **un-retweet** by tapping a liked or retweeted Tweet button, respectively. (Doing so will decrement the count for each)
 - [x] Click on links that appear in Tweets
 - [x] See embedded media in Tweets that contain images or videos
-- [ ] Reply to any Tweet (**2 points**)
+- [x] Reply to any Tweet (**2 points**)
   - Replies should be prefixed with the username
   - The `reply_id` should be set when posting the tweet
 - [x] See a character count when composing a Tweet (as well as a warning) (280 characters) (**1 point**)
 - [x] Load more tweets once they reach the bottom of the feed using infinite loading similar to the actual Twitter client
-- [ ] Click on a Profile image to reveal another user's profile page, including:
+- [x] Click on a Profile image to reveal another user's profile page, including:
   - Header view: picture and tagline
   - Basic stats: #tweets, #following, #followers
-- [ ] Switch between **timeline**, **mentions**, or **profile view** through a tab bar (**3 points**)
+- [x] Switch between **timeline**, **mentions**, or **profile view** through a tab bar (**3 points**)
 - [ ] Profile Page: pulling down the profile page should blur and resize the header image. (**4 points**)
 
 The following **additional** features are implemented:
@@ -56,7 +56,7 @@ Here's a walkthrough of implemented user stories:
 
 - BEFORE https://i.imgur.com/PVATrqm.gif
 - AFTER https://i.imgur.com/f870SFj.mp4
-
+- FINAL https://i.imgur.com/f9kOATb.mp4
 GIF created with [Kap](https://getkap.co/).
 
 ## Notes

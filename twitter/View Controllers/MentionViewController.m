@@ -103,10 +103,18 @@
     } else{
         cell.mediaImageView.hidden = YES;
     }
+//
+//    cell.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
+//    cell.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
+//    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", cell.tweet.inReplyToScreenName]]];
+//
     
-    cell.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
-    cell.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
-    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", cell.tweet.inReplyToScreenName]]];
+    if(![tweet.inReplyToStatusIdString isEqual:[NSNull null]]){
+    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]];
+    } else{
+        cell.inReplyToScreenNameLabel.hidden = YES;
+    }
+    
     
     [cell.profileImageView setUserInteractionEnabled:YES];
     cell.delegate = self;

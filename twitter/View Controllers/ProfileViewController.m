@@ -30,6 +30,70 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    if(self.user != nil) {
+        [[APIManager shared] getUserTimelineWithCompletion:self.user.screenName completion:^(NSMutableArray *tweets, NSError *error) {
+                    if (tweets) {
+                        NSLog(@"😎😎😎 Successfully loaded home timeline");
+                        for (Tweet *tweet in tweets) {
+                            NSLog(@"%@",tweet.text);
+
+                        }
+
+                        self.arrayOfTweets = tweets;
+                        NSLog(@"%@",self.arrayOfTweets);
+                    } else {
+                        NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+                    }
+
+                    [self.userTimelineTableView reloadData];
+            [self reload];
+        }];
+    } else {
+        [[APIManager shared] verifyCredentialsWithCompletion:^(User *user, NSError *error) {
+            if ([user.screenName isEqual:@"@trangttdang"]) {
+                NSLog(@"😎😎😎 Successfully verify credentials");
+                
+                self.user = user;
+                
+                if([self.user.screenName isEqual:@"@trangttdang"])
+                {
+                    [[APIManager shared] getUserTimelineWithCompletion:self.user.screenName completion:^(NSMutableArray *tweets, NSError *error) {
+                                if (tweets) {
+                                    NSLog(@"😎😎😎 Successfully loaded home timeline");
+                                    for (Tweet *tweet in tweets) {
+                                        NSLog(@"%@",tweet.text);
+
+                                    }
+
+                                    self.arrayOfTweets = tweets;
+                                    NSLog(@"%@",self.arrayOfTweets);
+                                } else {
+                                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+                                }
+
+                                [self.userTimelineTableView reloadData];
+                        [self reload];
+                    }];
+                }
+            }
+        }];
+        
+    }
+}
+
+
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+- (void) reload{
     self.userTimelineTableView.delegate = self;
     self.userTimelineTableView.dataSource = self;
     
@@ -53,54 +117,7 @@
     self.userNameLabel.text = self.user.name;
     self.screenNameLabel.text = self.user.screenName;
     self.statusCountLabel.text = [NSString stringWithFormat:@"%d", self.user.statusCount];
-    // Do any additional setup after loading the view.
-//        [[APIManager shared] getUserTimelineWithCompletion:^(NSMutableArray *tweets, NSError *error) {
-//            if (tweets) {
-//                NSLog(@"😎😎😎 Successfully loaded home timeline");
-//                for (Tweet *tweet in tweets) {
-//                    NSString *text = tweet.text;
-//                    NSLog(@"%@",text);
-//                }
-//                self.arrayOfTweets = tweets;
-//                NSLog(@"%@",self.arrayOfTweets);
-//            } else {
-//                NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-//            }
-//
-//            [self.homeTimelineTableView reloadData];
-//        }];
-//    NSInteger count = 20;
-//    NSNumber *countLoaded = [NSNumber numberWithInteger:count];
-    [[APIManager shared] getUserTimelineWithCompletion:self.user.screenName completion:^(NSMutableArray *tweets, NSError *error) {
-                if (tweets) {
-                    NSLog(@"😎😎😎 Successfully loaded home timeline");
-                    for (Tweet *tweet in tweets) {
-                        NSLog(@"%@",tweet.text);
-
-                    }
-                    
-                    self.arrayOfTweets = tweets;
-                    NSLog(@"%@",self.arrayOfTweets);
-                } else {
-                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
-                }
-        
-                [self.userTimelineTableView reloadData];
-    }];
 }
-
-
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
 
 
 

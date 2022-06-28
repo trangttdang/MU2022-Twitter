@@ -165,25 +165,6 @@
     
 }
 
-//- (void)didUnRetweet:(nonnull Tweet *)tweet {
-//    [self.delegate didUnRetweet:tweet];
-//}
-
-
-
-
-//
-//- (void)didTapProfileImage:(nonnull Tweet *)tweet {
-//    NSLog(@"It works");
-//}
-//
-//
-//- (void)didUnRetweet:(nonnull Tweet *)tweet {
-//
-//}
-//- (void)didFavorite:(Tweet *)tweet {
-//    self.tweet = tweet;
-//}
 
 
 

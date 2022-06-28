@@ -58,8 +58,12 @@
         
         
         NSLog(@"Tweet: %@", dictionary);
-        self.inReplyToStatusIdString = dictionary[@"in_reply_to_status_id_str"];
-        self.inReplyToScreenName = dictionary[@"in_reply_to_screen_name"];
+//        self.inReplyToStatusIdString = dictionary[@"in_reply_to_status_id_str"];
+//        self.inReplyToScreenName = dictionary[@"in_reply_to_screen_name"];
+//
+        if(![dictionary[@"in_reply_to_status_id_str"] isEqual:[NSNull null]]){
+            self.inReplyToScreenName =  dictionary[@"in_reply_to_screen_name"];
+        }
         
         // Initialize user
         NSDictionary *user = dictionary[@"user"];

@@ -63,6 +63,7 @@
 //
         if(![dictionary[@"in_reply_to_status_id_str"] isEqual:[NSNull null]]){
             self.inReplyToScreenName =  dictionary[@"in_reply_to_screen_name"];
+            self.inReplyToStatusIdString = dictionary[@"in_reply_to_status_id_str"];
         }
         
         // Initialize user

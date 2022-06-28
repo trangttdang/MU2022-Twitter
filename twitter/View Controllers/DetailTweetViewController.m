@@ -11,7 +11,7 @@
 #import "ComposeViewController.h"
 #import "TweetCell.h"
 
-@interface DetailTweetViewController () <ComposeViewControllerDelegate>
+@interface DetailTweetViewController () <ComposeViewControllerDelegate, TweetCellDelegate, UITableViewDelegate, UITableViewDataSource>
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UILabel *userNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *userScreenNameLabel;
@@ -22,12 +22,39 @@
 @property (weak, nonatomic) IBOutlet UITextView *textTextView;
 @property (weak, nonatomic) IBOutlet UIImageView *mediaImageView;
 @property (weak, nonatomic) IBOutlet UIButton *retweetButton;
+@property (weak, nonatomic) IBOutlet UITableView *replyTableView;
+@property (strong, nonatomic) NSMutableArray *arrayOfTweets ;
+//@property (strong, nonatomic) NSMutableArray *arrayOfReplyTweets;
+
 @end
 
 @implementation DetailTweetViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.replyTableView.delegate = self;
+    self.replyTableView.dataSource = self;
+    
+    self.arrayOfTweets = [[NSMutableArray alloc] init];
+    [[APIManager shared] getUserMentionWithCompletion:^(NSMutableArray *tweets, NSError *error) {
+                if (tweets) {
+                    NSLog(@"😎😎😎 Successfully loaded home timeline");
+                    
+                    for (Tweet *tweet in tweets) {
+                        NSLog(@"%@",tweet.text);
+                        if ([[NSString stringWithFormat:@"%@", tweet.inReplyToStatusIdString] isEqual: [NSString stringWithFormat:@"%@", self.tweet.idStr]]){
+                            [self.arrayOfTweets addObject:tweet];
+                        }
+                    }
+//                    self.arrayOfTweets = tweets;
+
+                } else {
+                    NSLog(@"😫😫😫 Error getting home timeline: %@", error.localizedDescription);
+                }
+        [self.replyTableView reloadData];
+
+    }];
+    
     // Do any additional setup after loading the view.
     self.userNameLabel.text = self.tweet.user.name;
     self.userScreenNameLabel.text = self.tweet.user.screenName;
@@ -165,6 +192,67 @@
     
 }
 
+- (void)didTapProfileImage:(nonnull Tweet *)tweet {
+    
+}
+
+
+- (void)didUnRetweet:(nonnull Tweet *)tweet {
+    
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    TweetCell *cell = [tableView dequeueReusableCellWithIdentifier:@"TweetCell" forIndexPath:indexPath];
+    Tweet *tweet = self.arrayOfTweets[indexPath.row];
+    
+    
+    NSString *URLString = tweet.user.profilePicture;
+    NSURL *url = [NSURL URLWithString:URLString];
+    NSData *urlData = [NSData dataWithContentsOfURL:url];
+    cell.tweet = tweet;
+    
+    cell.profileImageView.image = [UIImage imageWithData:urlData];
+    cell.profileImageView.layer.cornerRadius = 5;
+    cell.userNameLabel.text = tweet.user.name;
+    cell.dateCreatedLabel.text = tweet.createdAtString;
+    cell.userScreenNameLabel.text = tweet.user.screenName;
+    cell.retweetCountLabel.text = [NSString stringWithFormat:@"%d", tweet.retweetCount];
+    cell.favoriteCountLabel.text = [NSString stringWithFormat:@"%d", tweet.favoriteCount];
+    cell.tweet.favoriteImageAddress =tweet.favoriteImageAddress;
+    cell.tweet.retweetImageAddress = tweet.retweetImageAddress;
+    
+    [cell.favoriteButton setImage:[UIImage imageNamed:tweet.favoriteImageAddress] forState:UIControlStateNormal];
+    [cell.retweetButton setImage:[UIImage imageNamed:tweet.retweetImageAddress] forState:UIControlStateNormal];
+    
+    cell.textTextView.text = tweet.text;
+    cell.textTextView.editable = NO;
+    cell.textTextView.dataDetectorTypes = UIDataDetectorTypeAll;
+    
+    
+    NSURL *mediaUrlHttps = [NSURL URLWithString:tweet.mediaUrlHttps];
+    NSData *mediaData = [NSData dataWithContentsOfURL:mediaUrlHttps];
+    if(tweet.mediaUrlHttps){
+        cell.mediaImageView.image = [UIImage imageWithData:mediaData];
+        cell.mediaImageView.layer.cornerRadius = 5;
+    } else{
+        cell.mediaImageView.hidden = YES;
+    }
+    
+    cell.tweet.inReplyToStatusIdString = tweet.inReplyToStatusIdString;
+    cell.tweet.inReplyToScreenName = tweet.inReplyToScreenName;
+    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [@"@" stringByAppendingString: [NSString stringWithFormat:@"%@", cell.tweet.inReplyToScreenName]]];
+    
+    [cell.profileImageView setUserInteractionEnabled:YES];
+    cell.delegate = self;
+    return cell;
+    
+}
+
+- (NSInteger)tableView:(nonnull UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return self.arrayOfTweets.count;
+}
 
 
 

@@ -140,12 +140,13 @@
     //    NSString *replyToScreenName = [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName];
     
     
-    if(tweet.inReplyToStatusIdString == nil)
-    {
-        cell.inReplyToScreenNameLabel.hidden = YES;
-    } else{
-        cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]];
-    }
+//    if(tweet.inReplyToStatusIdString == nil)
+//    {
+//        cell.inReplyToScreenNameLabel.hidden = YES;
+//    } else{
+//        cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]];
+//    }
+    cell.inReplyToScreenNameLabel.text = [@"Replying to " stringByAppendingString: [NSString stringWithFormat:@"%@", tweet.inReplyToScreenName]];
     [cell.profileImageView setUserInteractionEnabled:YES];
     
     cell.delegate  = self;

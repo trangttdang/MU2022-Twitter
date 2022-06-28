@@ -624,6 +624,7 @@
                         <outlet property="favoriteCountLabel" destination="0dT-gL-kuf" id="5Xv-mD-vBg"/>
                         <outlet property="mediaImageView" destination="kRa-Zl-gvj" id="tLE-PD-I4x"/>
                         <outlet property="profileImageView" destination="VHF-n0-cqJ" id="2ML-6J-alB"/>
+                        <outlet property="replyTableView" destination="WgI-At-8jg" id="qSz-a2-tFv"/>
                         <outlet property="retweetButton" destination="BFp-Uy-B6O" id="Zyh-43-4co"/>
                         <outlet property="retweetCountLabel" destination="0k7-31-drG" id="m1L-f5-3hH"/>
                         <outlet property="textTextView" destination="ePg-Dv-pr3" id="HfJ-bb-H23"/>

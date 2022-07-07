@@ -41,7 +41,7 @@ The following **stretch** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Tweet that is retweeted will be pop up on the home time line and unretweeted will be disappear
+- [x] A tweet that is retweeted will pop up on the home timeline and un-retweeted will disappear
 - [x] Profile Page: Show all tweets that user interacts with including like, retweet, mentioned or reply to
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
